@@ -1,14 +1,17 @@
 #include <string>
 using namespace std;
 
-class VigEncrypter {
+class VigCipher {
     private:
       string plaintext;
       string key;
       int charToInt(char c);
       char intToChar(int i);
+      int eucMod(int a, int b);
       string extendKey(string key, int length);
+      string processText(string operation);
     public:
-        VigEncrypter(string p, string k);
+        VigCipher(string p, string k);
         string encrypt();
+        string decrypt();
 };

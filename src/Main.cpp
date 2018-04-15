@@ -1,25 +1,27 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-#include "VigEncrypter.h"
+#include "Arguments.h"
+#include "VigCipher.h"
 using namespace std;
 
 int main() {
-    string plaintext;
+    string text;
     string key;
+    string operation;
+    string processedText;
+
     cout << "Welcome to the Vigenere Cipher encrypter\n";
-    cout << "Please enter a text to encrypt: ";
-    getline(cin, plaintext);
-    if (plaintext.length() <= 0) { // Checks whether the plaintext is valid
-        throw invalid_argument("Null plaintext");
+    Arguments arguments;
+    text = arguments.getMessage();
+    key = arguments.getKey();
+    operation = arguments.getOperation();
+    VigCipher vigCipher(text, key);
+    if (operation.compare("encrypt") == 0) {
+        processedText = vigCipher.encrypt();
+    } else {
+        processedText = vigCipher.decrypt();
     }
-    cout << "Please enter a key: ";
-    getline(cin, key);
-    if (key.length() <= 0) { // Checks whether the key is valid
-        throw invalid_argument("Null key");
-    }
-    VigEncrypter vigEncrypter(plaintext, key);
-    string encryptedText = vigEncrypter.encrypt();
-    cout << "Here's your encrypted text: " + encryptedText << endl;
+    cout << "Here's your " + operation + "ed text: " + processedText << endl;
     return 0;
 }
